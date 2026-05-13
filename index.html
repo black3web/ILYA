@@ -1,213 +1,288 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=1024">
-  <title>ㅤILYAㅤ</title>
-  <link rel="icon" href="https://iili.io/qWN5VvR.md.jpg" type="image/jpeg">
-  <meta name="description" content="إيليا — مطوّر أنظمة تفاعلية فائقة الأداء">
-  <meta name="theme-color" content="#030000">
-  <meta name="color-scheme" content="dark">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+    <title>ILYA</title>
+    <link rel="icon" href="https://iili.io/qWN5VvR.md.jpg" type="image/jpeg" />
+    <meta name="description" content="ILYA — مطوّر أنظمة تفاعلية فائقة الأداء" />
+    <meta name="theme-color" content="#030000" />
+    <meta name="color-scheme" content="dark" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
+    </script>
 
-  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 
-  <script>
-    /* الإعدادات الأساسية للموقع - تم تحديث الروابط والهوية */
-    window.TR7 = {
-      profileName    : 'إيليا',
-      profileSubtitle: 'Web Engineer & UI Architect',
-      bracketOpen    : '[',
-      bracketClose   : ']',
-      profileDesc    : 'مطوّر ويب محترف متخصص في دمج الذكاء الاصطناعي مع تطبيقات الويب الحديثة. أبني أنظمة تفاعلية عالية الأداء وأؤمن بأن الجماليات والوظائف يجب أن تعمل معاً بتناغم تام لخلق تجربة رقمية لا تُنسى.',
-      sectionTitle   : 'تواصل',
-      coverHudText   : 'COVER · LIVE',
-      footerCopy     : '© 2026 إيليا — جميع الحقوق محفوظة',
-      footerUrlLabel : 'black3web.github.io',
-      footerUrl      : 'https://black3web.github.io/Blackweb/',
-      footerVisLabel : 'VISITS',
-      bannerUrl      : 'https://iili.io/fb6SvS9.md.jpg',
-      profileUrl     : 'https://iili.io/fb64ziv.md.jpg',
-      logoUrl        : 'https://iili.io/qWN5VvR.md.jpg',
-      links: [
-        { name:'YouTube',   url:'https://youtube.com/@scv_t',     icon:'fab fa-youtube',   handle:'scv_t',     color:'#ff0000' },
-        { name:'Instagram', url:'https://instagram.com/szc2v',    icon:'fab fa-instagram', handle:'szc2v',     color:'#e1306c' },
-        { name:'Telegram',  url:'https://t.me/ILYA3bot',          icon:'fab fa-telegram',  handle:'@ILYA3bot', color:'#2aabee' },
-        { name:'Channel',   url:'https://t.me/swc_t',             icon:'fas fa-bullhorn',  handle:'قناة تليجرام', color:'#ffffff' }
-      ]
-    };
-  </script>
+    <script>
+        window.ILYA = {
+            profileName: 'إيليا',
+            profileSubtitle: 'Web Engineer & UI Architect',
+            bracketOpen: '[',
+            bracketClose: ']',
+            profileDesc: 'مطوّر ويب محترف متخصص في دمج الذكاء الاصطناعي مع تطبيقات الويب الحديثة. أبني أنظمة تفاعلية عالية الأداء وأؤمن بأن الجماليات والوظائف يجب أن تعمل معاً بتناغم تام لخلق تجربة رقمية لا تُنسى.',
+            sectionTitle: 'تواصل',
+            coverHudText: 'COVER · LIVE',
+            footerCopy: '© 2026 إيليا — جميع الحقوق محفوظة',
+            footerUrlLabel: 'black3web.github.io',
+            footerUrl: 'https://black3web.github.io/Blackweb/',
+            footerVisLabel: 'VISITS',
+            bannerUrl: 'https://iili.io/fb6SvS9.md.jpg',
+            profileUrl: 'https://iili.io/fb64ziv.md.jpg',
+            logoUrl: 'https://iili.io/qWN5VvR.md.jpg',
+            links: [{
+                name: 'Telegram',
+                url: 'https://t.me/ILYA3bot',
+                icon: 'fab fa-telegram',
+                handle: '@ILYA3bot',
+                color: '#2aabee'
+            }, {
+                name: 'Channel',
+                url: 'https://t.me/swc_t',
+                icon: 'fab fa-telegram-plane',
+                handle: 'swc_t',
+                color: '#0088cc'
+            }, {
+                name: 'YouTube',
+                url: 'https://youtube.com/@scv_t',
+                icon: 'fab fa-youtube',
+                handle: 'scv_t',
+                color: '#ff0000'
+            }, {
+                name: 'Instagram',
+                url: 'https://instagram.com/szc2v',
+                icon: 'fab fa-instagram',
+                handle: 'szc2v',
+                color: '#e1306c'
+            }, {
+                name: 'GitHub',
+                url: 'https://github.com/black3web',
+                icon: 'fab fa-github',
+                handle: 'black3web',
+                color: '#ffffff'
+            }, {
+                name: 'Snapchat',
+                url: 'https://snapchat.com/',
+                icon: 'fab fa-snapchat',
+                handle: 'Snapchat',
+                color: '#fffc00'
+            }]
+        };
+    </script>
+    <script src="config.js" onerror="void 0"></script>
 </head>
 <body>
 
-<canvas id="canvas-bg" aria-hidden="true"></canvas>
+    <!-- WebGL canvas -->
+    <canvas id="canvas-bg" aria-hidden="true"></canvas>
 
-<div class="atmo-vignette"  aria-hidden="true"></div>
-<div class="atmo-scanlines" aria-hidden="true"></div>
+    <!-- Atmosphere overlay -->
+    <div class="atmo-vignette" aria-hidden="true"></div>
+    <div class="atmo-scanlines" aria-hidden="true"></div>
 
-<div id="loader" role="status" aria-label="جاري التحميل">
-  <div class="ldr-ring ldr-ring-a" aria-hidden="true"></div>
-  <div class="ldr-ring ldr-ring-b" aria-hidden="true"></div>
-  <div class="ldr-ring ldr-ring-c" aria-hidden="true"></div>
+    <!-- ===== LOADER ===== -->
+    <div id="loader" role="status" aria-label="جاري التحميل">
+        <div class="ldr-ring ldr-ring-a" aria-hidden="true"></div>
+        <div class="ldr-ring ldr-ring-b" aria-hidden="true"></div>
+        <div class="ldr-ring ldr-ring-c" aria-hidden="true"></div>
 
-  <svg class="ldr-orbit" viewBox="0 0 260 260" aria-hidden="true">
-    <defs>
-      <linearGradient id="lc1" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%"   stop-color="#ff0033" stop-opacity="0"/>
-        <stop offset="50%"  stop-color="#ff0033" stop-opacity="1"/>
-        <stop offset="100%" stop-color="#ffffff"  stop-opacity="0.9"/>
-      </linearGradient>
-      <linearGradient id="lc2" x1="100%" y1="0%" x2="0%" y2="0%">
-        <stop offset="0%"   stop-color="#880011" stop-opacity="0"/>
-        <stop offset="55%"  stop-color="#cc001a" stop-opacity="1"/>
-        <stop offset="100%" stop-color="#880011" stop-opacity="0"/>
-      </linearGradient>
-    </defs>
-    <circle cx="130" cy="130" r="120" fill="none" stroke="rgba(200,0,30,.07)" stroke-width=".5"/>
-    <circle cx="130" cy="130" r="94"  fill="none" stroke="rgba(200,0,30,.05)" stroke-width=".4"/>
-    <circle cx="130" cy="130" r="120" fill="none" stroke="url(#lc1)" stroke-width="3"   stroke-linecap="round" stroke-dasharray="95 659"  class="oc1"/>
-    <circle cx="130" cy="130" r="120" fill="none" stroke="url(#lc2)" stroke-width="2"   stroke-linecap="round" stroke-dasharray="60 694"  class="oc2"/>
-    <circle cx="130" cy="130" r="94"  fill="none" stroke="url(#lc1)" stroke-width="2"   stroke-linecap="round" stroke-dasharray="50 541"  class="oc3"/>
-    <circle cx="130" cy="130" r="94"  fill="none" stroke="#cc001a"   stroke-width="1"   stroke-linecap="round" stroke-dasharray="32 559"  class="oc4" opacity=".5"/>
-  </svg>
-
-  <div class="ldr-logo-wrap">
-    <div class="ldr-aura" aria-hidden="true"></div>
-    <img id="ldr-logo-img" src="https://iili.io/qWN5VvR.md.jpg" alt="" class="ldr-logo" loading="eager" decoding="async">
-    <div class="ldr-scan" aria-hidden="true"></div>
-    <span class="lc lc-tl" aria-hidden="true"></span>
-    <span class="lc lc-tr" aria-hidden="true"></span>
-    <span class="lc lc-bl" aria-hidden="true"></span>
-    <span class="lc lc-br" aria-hidden="true"></span>
-  </div>
-
-  <div class="ldr-hud">
-    <div class="ldr-brand">ILYA</div>
-    <div class="ldr-status" id="ldr-status">INITIALIZING SYSTEM</div>
-    <div class="ldr-bar-row">
-      <div class="ldr-track">
-        <div class="ldr-fill" id="ldr-fill"></div>
-        <div class="ldr-head" id="ldr-head"></div>
-      </div>
-      <span class="ldr-pct" id="ldr-pct">0%</span>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="img-modal" role="dialog" aria-modal="true" aria-hidden="true">
-  <button class="modal-close" id="modal-close" aria-label="إغلاق">
-    <i class="fas fa-times" aria-hidden="true"></i>
-  </button>
-  <div class="modal-frame">
-    <img src="" alt="" class="modal-img" id="modal-img">
-    <span class="mc mc-tl" aria-hidden="true"></span>
-    <span class="mc mc-tr" aria-hidden="true"></span>
-    <span class="mc mc-bl" aria-hidden="true"></span>
-    <span class="mc mc-br" aria-hidden="true"></span>
-  </div>
-</div>
-
-<main class="page-wrap">
-  <article class="glass-card" id="main-card">
-    <div class="card-glow-layer" aria-hidden="true"></div>
-    <svg class="card-border-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-      <defs>
-        <linearGradient id="cb1" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stop-color="#ff0033" stop-opacity="0"/>
-          <stop offset="50%"  stop-color="#ff0033" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#ff0033" stop-opacity="0"/>
-        </linearGradient>
-        <linearGradient id="cb2" x1="100%" y1="0%" x2="0%" y2="0%">
-          <stop offset="0%"   stop-color="#880011" stop-opacity="0"/>
-          <stop offset="50%"  stop-color="#880011" stop-opacity=".7"/>
-          <stop offset="100%" stop-color="#880011" stop-opacity="0"/>
-        </linearGradient>
-      </defs>
-      <rect x=".4" y=".4" width="99.2" height="99.2" rx="5" fill="none" stroke="url(#cb1)" stroke-width=".55" stroke-dasharray="22 78" class="cb-cw"/>
-      <rect x=".4" y=".4" width="99.2" height="99.2" rx="5" fill="none" stroke="url(#cb2)" stroke-width=".35" stroke-dasharray="14 86" class="cb-ccw"/>
-    </svg>
-    <div class="card-scanlines" aria-hidden="true"></div>
-    <div class="card-grain"     aria-hidden="true"></div>
-
-    <div class="banner-wrap" id="banner-wrap" role="button" tabindex="0" aria-label="تكبير صورة الغلاف">
-      <img id="banner-img" src="https://iili.io/fb6SvS9.md.jpg" alt="" class="banner-img" loading="eager" decoding="async">
-      <div class="banner-vignette" aria-hidden="true"></div>
-      <div class="banner-fade"     aria-hidden="true"></div>
-      <div class="banner-hud"      aria-hidden="true">
-        <span class="bhud-dot"></span>
-        <span class="bhud-txt" id="cover-hud-txt">COVER · LIVE</span>
-      </div>
-    </div>
-
-    <section class="profile-section">
-      <div class="profile-wrap" id="profile-wrap" role="button" tabindex="0" aria-label="تكبير الصورة الشخصية">
-        <svg class="pr1" viewBox="0 0 180 180" overflow="visible" aria-hidden="true">
-          <defs>
-            <linearGradient id="prg1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%"   stop-color="#ff0033" stop-opacity="0"/>
-              <stop offset="55%"  stop-color="#ff0033" stop-opacity="1"/>
-              <stop offset="100%" stop-color="#ffffff"  stop-opacity=".9"/>
-            </linearGradient>
-          </defs>
-          <circle cx="90" cy="90" r="82" fill="none" stroke="rgba(200,0,30,.07)" stroke-width=".5"/>
-          <circle cx="90" cy="90" r="82" fill="none" stroke="url(#prg1)" stroke-width="3" stroke-linecap="round" stroke-dasharray="78 437" class="pr-cw"/>
+        <svg class="ldr-orbit" viewBox="0 0 260 260" aria-hidden="true">
+            <defs>
+                <linearGradient id="lc1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#ff0033" stop-opacity="0" />
+                    <stop offset="50%" stop-color="#ff0033" stop-opacity="1" />
+                    <stop offset="100%" stop-color="#ffffff" stop-opacity="0.9" />
+                </linearGradient>
+                <linearGradient id="lc2" x1="100%" y1="0%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#880011" stop-opacity="0" />
+                    <stop offset="55%" stop-color="#cc001a" stop-opacity="1" />
+                    <stop offset="100%" stop-color="#880011" stop-opacity="0" />
+                </linearGradient>
+            </defs>
+            <circle cx="130" cy="130" r="120" fill="none" stroke="rgba(200,0,30,0.07)" stroke-width="0.5" />
+            <circle cx="130" cy="130" r="94" fill="none" stroke="rgba(200,0,30,0.05)" stroke-width="0.4" />
+            <circle cx="130" cy="130" r="120" fill="none" stroke="url(#lc1)" stroke-width="3" stroke-linecap="round" stroke-dasharray="95 659" class="oc1" />
+            <circle cx="130" cy="130" r="120" fill="none" stroke="url(#lc2)" stroke-width="2" stroke-linecap="round" stroke-dasharray="60 694" class="oc2" />
+            <circle cx="130" cy="130" r="94" fill="none" stroke="url(#lc1)" stroke-width="2" stroke-linecap="round" stroke-dasharray="50 541" class="oc3" />
+            <circle cx="130" cy="130" r="94" fill="none" stroke="#cc001a" stroke-width="1" stroke-linecap="round" stroke-dasharray="32 559" class="oc4" opacity="0.5" />
         </svg>
-        <div class="pr-aura"  aria-hidden="true"></div>
-        <img id="profile-img" src="https://iili.io/fb64ziv.md.jpg" alt="إيليا" class="profile-img" loading="eager" decoding="async">
-      </div>
-    </section>
 
-    <section class="profile-info">
-      <h1 class="profile-name">
-        <span class="pn-glow" id="profile-name-txt">إيليا</span>
-        <span class="pn-sub">ILYA</span>
-      </h1>
-
-      <p class="profile-title">
-        <span class="ptb ptb-l" id="bracket-open">[</span>
-        <span class="pt-word"   id="profile-subtitle-txt">Web Engineer &amp; UI Architect</span>
-        <span class="ptb ptb-r" id="bracket-close">]</span>
-      </p>
-
-      <div class="desc-box">
-        <div class="db-line db-top" aria-hidden="true"></div>
-        <p class="db-text" id="profile-desc-txt">مطوّر ويب محترف متخصص في دمج الذكاء الاصطناعي مع تطبيقات الويب الحديثة. أبني أنظمة تفاعلية عالية الأداء وأؤمن بأن الجماليات والوظائف يجب أن تعمل معاً بتناغم تام لخلق تجربة رقمية لا تُنسى.</p>
-        <div class="db-line db-bot" aria-hidden="true"></div>
-      </div>
-    </section>
-
-    <section class="links-section">
-      <h2 class="section-title">
-        <span class="stl"     aria-hidden="true"></span>
-        <span class="st-word" id="section-title-txt">تواصل</span>
-        <span class="stl"     aria-hidden="true"></span>
-      </h2>
-      <div class="links-grid" id="links-grid">
+        <div class="ldr-logo-wrap">
+            <div class="ldr-aura" aria-hidden="true"></div>
+            <img id="ldr-logo-img" src="https://iili.io/qWN5VvR.md.jpg" alt="" class="ldr-logo" loading="eager" decoding="async" />
+            <div class="ldr-scan" aria-hidden="true"></div>
+            <span class="lc lc-tl" aria-hidden="true"></span>
+            <span class="lc lc-tr" aria-hidden="true"></span>
+            <span class="lc lc-bl" aria-hidden="true"></span>
+            <span class="lc lc-br" aria-hidden="true"></span>
         </div>
-    </section>
 
-    <footer class="site-footer">
-      <div class="fd-rule" aria-hidden="true">
-        <div class="fd-ln"></div>
-        <div class="fd-gem">◆</div>
-        <div class="fd-ln"></div>
-      </div>
-      <div class="footer-inner">
-        <div class="f-left">
-          <span class="f-copy" id="footer-copy-txt">© 2026 ILYA — جميع الحقوق محفوظة</span>
+        <div class="ldr-hud">
+            <div class="ldr-brand">ILYA</div>
+            <div class="ldr-status" id="ldr-status">INITIALIZING SYSTEM</div>
+            <div class="ldr-bar-row">
+                <div class="ldr-track">
+                    <div class="ldr-fill" id="ldr-fill"></div>
+                    <div class="ldr-head" id="ldr-head"></div>
+                </div>
+                <span class="ldr-pct" id="ldr-pct">0%</span>
+            </div>
         </div>
-      </div>
-    </footer>
-  </article>
-</main>
 
-<script src="main.js"></script>
+        <span class="lhud lhud-tl" aria-hidden="true"></span>
+        <span class="lhud lhud-tr" aria-hidden="true"></span>
+        <span class="lhud lhud-bl" aria-hidden="true"></span>
+        <span class="lhud lhud-br" aria-hidden="true"></span>
+    </div>
+
+    <!-- ===== IMAGE MODAL ===== -->
+    <div class="modal-overlay" id="img-modal" role="dialog" aria-modal="true" aria-hidden="true">
+        <button class="modal-close" id="modal-close" aria-label="إغلاق">
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+        <div class="modal-frame">
+            <img src="" alt="" class="modal-img" id="modal-img" />
+            <span class="mc mc-tl" aria-hidden="true"></span>
+            <span class="mc mc-tr" aria-hidden="true"></span>
+            <span class="mc mc-bl" aria-hidden="true"></span>
+            <span class="mc mc-br" aria-hidden="true"></span>
+        </div>
+    </div>
+
+    <!-- ===== MAIN CARD ===== -->
+    <main class="page-wrap">
+        <article class="glass-card" id="main-card">
+
+            <!-- Card decoration -->
+            <div class="card-glow-layer" aria-hidden="true"></div>
+            <svg class="card-border-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                    <linearGradient id="cb1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#ff0033" stop-opacity="0" />
+                        <stop offset="50%" stop-color="#ff0033" stop-opacity="1" />
+                        <stop offset="100%" stop-color="#ff0033" stop-opacity="0" />
+                    </linearGradient>
+                    <linearGradient id="cb2" x1="100%" y1="0%" x2="0%" y2="0%">
+                        <stop offset="0%" stop-color="#880011" stop-opacity="0" />
+                        <stop offset="50%" stop-color="#880011" stop-opacity="0.7" />
+                        <stop offset="100%" stop-color="#880011" stop-opacity="0" />
+                    </linearGradient>
+                </defs>
+                <rect x="0.4" y="0.4" width="99.2" height="99.2" rx="5" fill="none" stroke="url(#cb1)" stroke-width="0.55" stroke-dasharray="22 78" class="cb-cw" />
+                <rect x="0.4" y="0.4" width="99.2" height="99.2" rx="5" fill="none" stroke="url(#cb2)" stroke-width="0.35" stroke-dasharray="14 86" class="cb-ccw" />
+            </svg>
+            <div class="card-scanlines" aria-hidden="true"></div>
+            <div class="card-grain" aria-hidden="true"></div>
+            <span class="cc cc-tl" aria-hidden="true"></span>
+            <span class="cc cc-tr" aria-hidden="true"></span>
+            <span class="cc cc-bl" aria-hidden="true"></span>
+            <span class="cc cc-br" aria-hidden="true"></span>
+
+            <!-- Banner -->
+            <div class="banner-wrap" id="banner-wrap" role="button" tabindex="0" aria-label="تكبير صورة الغلاف">
+                <img id="banner-img" src="https://iili.io/fb6SvS9.md.jpg" alt="" class="banner-img" loading="eager" decoding="async" />
+                <div class="banner-vignette" aria-hidden="true"></div>
+                <div class="banner-fade" aria-hidden="true"></div>
+                <div class="banner-hud" aria-hidden="true">
+                    <span class="bhud-dot"></span>
+                    <span class="bhud-txt" id="cover-hud-txt">COVER · LIVE</span>
+                </div>
+            </div>
+
+            <!-- Profile photo -->
+            <section class="profile-section">
+                <div class="profile-wrap" id="profile-wrap" role="button" tabindex="0" aria-label="تكبير الصورة الشخصية">
+                    <svg class="pr1" viewBox="0 0 180 180" overflow="visible" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="prg1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ff0033" stop-opacity="0" />
+                                <stop offset="55%" stop-color="#ff0033" stop-opacity="1" />
+                                <stop offset="100%" stop-color="#ffffff" stop-opacity="0.9" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="90" cy="90" r="82" fill="none" stroke="rgba(200,0,30,0.07)" stroke-width="0.5" />
+                        <circle cx="90" cy="90" r="82" fill="none" stroke="url(#prg1)" stroke-width="3" stroke-linecap="round" stroke-dasharray="78 437" class="pr-cw" />
+                    </svg>
+                    <svg class="pr2" viewBox="0 0 180 180" overflow="visible" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="prg2" x1="100%" y1="100%" x2="0%" y2="0%">
+                                <stop offset="0%" stop-color="#880011" stop-opacity="0" />
+                                <stop offset="50%" stop-color="#cc001a" stop-opacity="1" />
+                                <stop offset="100%" stop-color="#ff3355" stop-opacity="0.75" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="90" cy="90" r="82" fill="none" stroke="url(#prg2)" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="52 463" class="pr-ccw" />
+                    </svg>
+                    <div class="pr-aura" aria-hidden="true"></div>
+                    <img id="profile-img" src="https://iili.io/fb64ziv.md.jpg" alt="إيليا" class="profile-img" loading="eager" decoding="async" />
+                    <div class="pr-shine" aria-hidden="true"></div>
+                </div>
+            </section>
+
+            <!-- Info -->
+            <section class="profile-info">
+                <h1 class="profile-name">
+                    <span class="pn-glow" id="profile-name-txt">إيليا</span>
+                    <span class="pn-sub">ILYA</span>
+                    <span class="pn-line" aria-hidden="true"></span>
+                </h1>
+
+                <p class="profile-title">
+                    <span class="ptb ptb-l" id="bracket-open">[</span>
+                    <span class="pt-word" id="profile-subtitle-txt">Web Engineer &amp; UI Architect</span>
+                    <span class="ptb ptb-r" id="bracket-close">]</span>
+                </p>
+
+                <div class="desc-box">
+                    <div class="db-line db-top" aria-hidden="true"></div>
+                    <p class="db-text" id="profile-desc-txt">مطوّر ويب محترف متخصص في دمج الذكاء الاصطناعي مع تطبيقات الويب الحديثة. أبني أنظمة تفاعلية عالية الأداء وأؤمن بأن الجماليات والوظائف يجب أن تعمل معاً بتناغم تام لخلق تجربة رقمية لا تُنسى.</p>
+                    <div class="db-line db-bot" aria-hidden="true"></div>
+                </div>
+            </section>
+
+            <!-- Links -->
+            <section class="links-section">
+                <h2 class="section-title">
+                    <span class="stl" aria-hidden="true"></span>
+                    <span class="st-word" id="section-title-txt">تواصل</span>
+                    <span class="stl" aria-hidden="true"></span>
+                </h2>
+                <div class="links-grid" id="links-grid"></div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="site-footer">
+                <div class="fd-rule" aria-hidden="true">
+                    <div class="fd-ln"></div>
+                    <div class="fd-gem">◆</div>
+                    <div class="fd-ln"></div>
+                </div>
+                <div class="footer-inner">
+                    <div class="f-left">
+                        <span class="f-copy" id="footer-copy-txt">© 2026 إيليا — جميع الحقوق محفوظة</span>
+                        <div class="visitor-badge">
+                            <i class="fas fa-eye" aria-hidden="true"></i>
+                            <span id="visit-count">0</span>
+                            <span class="vbl" id="footer-vis-label">VISITS</span>
+                        </div>
+                    </div>
+                    <a id="footer-url-link" href="https://black3web.github.io/Blackweb/" target="_blank" rel="noopener noreferrer" class="site-url">
+                        <span class="su-a" aria-hidden="true">⟶</span>
+                        <span id="footer-url-label-txt">black3web.github.io</span>
+                    </a>
+                </div>
+            </footer>
+
+        </article>
+    </main>
+
+    <script src="main.js"></script>
 </body>
-</html>
+  </html>
