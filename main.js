@@ -1,386 +1,244 @@
-/* ════════════════════════════════════════════════════════
-   ILYA · main.js
-   Premium WebGL Geometric Scene + GSAP Cinematic Idle
-   Optimized for 60fps Mobile · No Lag
-   ════════════════════════════════════════════════════════ */
+/**
+ * ════════════════════════════════════════════════════════
+ * ILYA SYSTEM CORE · main.js
+ * Professional WebGL Engine & UI Logic
+ * High-Performance · 60 FPS · Physically Based Rendering
+ * ════════════════════════════════════════════════════════
+ */
 
 'use strict';
 
-/* ─── Tiny helpers ─── */
-const qs    = (s, p = document) => p.querySelector(s);
-const qsa   = (s, p = document) => [...p.querySelectorAll(s)];
-const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
-const CFG   = window.TR7 || {}; // Fallback for config
-
-const LOADER_MSGS = [
-  'INITIALIZING ILYA SYSTEM',
-  'LOADING ASSETS',
-  'CALIBRATING 3D RENDERER',
-  'BUILDING GEOMETRY',
-  'SYSTEM ONLINE'
-];
-
-/* ════════════════════════════════════════════════════════
-   VISITOR COUNTER
-════════════════════════════════════════════════════════ */
-function initVisitor() {
-  try {
-    const n = (parseInt(localStorage.getItem('ilya_vc') || '0', 10)) + 1;
-    localStorage.setItem('ilya_vc', String(n));
-    const el = qs('#visit-count');
-    if (el) el.textContent = n.toLocaleString('en-US');
-  } catch (_) {}
-}
-
-/* ════════════════════════════════════════════════════════
-   BUILD LINK CARDS
-════════════════════════════════════════════════════════ */
-function buildLinks() {
-  const grid  = qs('#links-grid');
-  const links = Array.isArray(CFG.links) ? CFG.links : [];
-  if (!grid || !links.length) return;
-
-  grid.innerHTML = '';
-  links.forEach(({ name = '', url = '#', icon = '', handle = '', color = '#ff0033' }) => {
-    const a = document.createElement('a');
-    a.className = 'app-card';
-    a.href = url;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    a.setAttribute('aria-label', name);
-    a.innerHTML = `
-      <div class="aib" style="box-shadow:0 0 20px ${color}40,0 5px 15px rgba(0,0,0,.8);">
-        <i class="${icon}" style="color:${color};" aria-hidden="true"></i>
-      </div>
-      <span class="an">${name}</span>
-    `;
-    grid.appendChild(a);
-  });
-}
-
-/* ════════════════════════════════════════════════════════
-   LOADER
-════════════════════════════════════════════════════════ */
-function runLoader(onComplete) {
-  const loader = qs('#loader');
-  const fillEl = qs('#ldr-fill');
-  const headEl = qs('#ldr-head');
-  const pctEl  = qs('#ldr-pct');
-  const statEl = qs('#ldr-status');
-  if (!loader) { onComplete(); return; }
-
-  let pct = 0, msgIdx = 0, raf;
-  const start  = performance.now();
-  const minMs  = 2500; // تحميل أسرع قليلاً
-
-  function tick(now) {
-    const natural = clamp((now - start) / minMs * 100, 0, 100);
-    pct = clamp(pct + (natural - pct) * 0.08, 0, 100);
-    const pi = Math.round(pct);
-
-    if (fillEl) fillEl.style.width = pct + '%';
-    if (headEl) headEl.style.right = (100 - pct) + '%';
-    if (pctEl)  pctEl.textContent  = pi + '%';
-
-    const ni = Math.min(Math.floor(pct / 25), LOADER_MSGS.length - 1);
-    if (ni !== msgIdx) {
-      msgIdx = ni;
-      if (statEl) {
-        statEl.style.opacity = '0';
-        setTimeout(() => { if (statEl) { statEl.textContent = LOADER_MSGS[msgIdx]; statEl.style.opacity = '1'; } }, 150);
-      }
-    }
-
-    if (pct < 99.9) {
-      raf = requestAnimationFrame(tick);
-    } else {
-      if (pctEl) pctEl.textContent = '100%';
-      setTimeout(() => {
-        loader.classList.add('hidden');
-        loader.addEventListener('transitionend', () => { loader.remove(); onComplete(); }, { once: true });
-      }, 300);
-    }
-  }
-  raf = requestAnimationFrame(tick);
-
-  // Fallback in case animation gets stuck
-  setTimeout(() => {
-    cancelAnimationFrame(raf);
-    if (loader.isConnected) {
-      loader.classList.add('hidden');
-      setTimeout(() => { loader.remove(); onComplete(); }, 500);
-    }
-  }, 6000);
-}
-
-/* ════════════════════════════════════════════════════════
-   WebGL — PREMIUM GEOMETRIC SHAPES
-════════════════════════════════════════════════════════ */
-const PremiumScene = (() => {
-  let renderer, scene, camera, shapesGroup, particles;
-  let light1, light2;
-  let W = window.innerWidth, H = window.innerHeight;
-  const mouse      = { x: 0, y: 0 };
-  const targetRot  = { x: 0, y: 0 };
-  const currentRot = { x: 0, y: 0 };
-  let animId;
-
-  function init() {
-    if (typeof THREE === 'undefined') return;
-    const canvas = qs('#canvas-bg');
-    if (!canvas) return;
-
-    // تحديد الدقة لمنع اللاج على الجوال (نحدها بـ 1.5 أو 2 كحد أقصى)
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(dpr);
-    renderer.setSize(W, H);
-    renderer.setClearColor(0x020000, 1); // خلفية سوداء عميقة
-
-    scene  = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x020000, 0.05);
-
-    camera = new THREE.PerspectiveCamera(50, W / H, 0.1, 100);
-    camera.position.set(0, 0, 12);
-
-    shapesGroup = new THREE.Group();
-    scene.add(shapesGroup);
-
-    // 1. الخامات (Material): مظهر معدني/زجاجي فخم يشبه الآيفون
-    const premiumMaterial = new THREE.MeshStandardMaterial({
-      color: 0x0a0002,      // أسود مائل للأحمر الداكن
-      metalness: 0.9,       // انعكاس عالي جداً
-      roughness: 0.15,      // نعومة عالية
-      flatShading: false
-    });
-
-    const wireframeMaterial = new THREE.MeshBasicMaterial({
-      color: 0xff0033,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.1
-    });
-
-    // 2. الأشكال الهندسية المعقدة (عالية الدقة)
-    const geometries = [
-      new THREE.TorusKnotGeometry(1.8, 0.6, 128, 32),
-      new THREE.IcosahedronGeometry(2, 0),
-      new THREE.OctahedronGeometry(2, 0)
-    ];
-
-    geometries.forEach((geo, index) => {
-      const mesh = new THREE.Mesh(geo, premiumMaterial);
-      const wire = new THREE.Mesh(geo, wireframeMaterial);
-      
-      // تكوين طبقتين (صلبة + إطار خفيف جداً) لزيادة التفاصيل
-      mesh.add(wire);
-      
-      // توزيع الأشكال في الفراغ
-      mesh.position.x = (Math.random() - 0.5) * 15;
-      mesh.position.y = (Math.random() - 0.5) * 15;
-      mesh.position.z = (Math.random() - 0.5) * 10 - 5;
-      
-      mesh.rotation.x = Math.random() * Math.PI;
-      mesh.rotation.y = Math.random() * Math.PI;
-
-      // سرعة دوران خاصة بكل شكل
-      mesh.userData = {
-        rx: (Math.random() - 0.5) * 0.01,
-        ry: (Math.random() - 0.5) * 0.01,
-        rz: (Math.random() - 0.5) * 0.01
-      };
-
-      shapesGroup.add(mesh);
-    });
-
-    // 3. جزيئات خلفية بسيطة للعمق
-    const particlesGeo = new THREE.BufferGeometry();
-    const particlesCount = 300; // عدد قليل للحفاظ على الأداء
-    const posArray = new Float32Array(particlesCount * 3);
-    for(let i=0; i<particlesCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 30;
-    }
-    particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    const particlesMat = new THREE.PointsMaterial({
-        size: 0.05,
-        color: 0xff3355,
-        transparent: true,
-        opacity: 0.6,
-        blending: THREE.AdditiveBlending
-    });
-    particles = new THREE.Points(particlesGeo, particlesMat);
-    scene.add(particles);
-
-    // 4. الإضاءة السينمائية (التي تعطي اللمعان للأشكال)
-    const ambientLight = new THREE.AmbientLight(0x222222);
-    scene.add(ambientLight);
-
-    light1 = new THREE.PointLight(0xff0033, 3, 50); // إضاءة حمراء نيون
-    scene.add(light1);
-
-    light2 = new THREE.PointLight(0xffffff, 1.5, 50); // إضاءة بيضاء ناصعة
-    scene.add(light2);
-
-    // 5. حساسات اللمس والماوس للتفاعل
-    const updateMouse = (clientX, clientY) => {
-      mouse.x = (clientX / W) * 2 - 1;
-      mouse.y = -(clientY / H) * 2 + 1;
+const ILYA = (() => {
+    // ─── Private Variables ───
+    const cfg = window.ILYA_CONFIG;
+    const dom = {
+        loader:    document.querySelector('#loader'),
+        fill:      document.querySelector('#loader-fill'),
+        pct:       document.querySelector('#loader-pct'),
+        card:      document.querySelector('#main-card'),
+        links:     document.querySelector('#links-grid'),
+        modal:     document.querySelector('#image-modal'),
+        modalImg:  document.querySelector('#modal-img'),
+        modalCls:  document.querySelector('#modal-close')
     };
 
-    window.addEventListener('mousemove', e => updateMouse(e.clientX, e.clientY), { passive: true });
-    window.addEventListener('touchmove', e => {
-      if (e.touches.length > 0) updateMouse(e.touches[0].clientX, e.touches[0].clientY);
-    }, { passive: true });
+    // ─── WebGL State ───
+    let scene, camera, renderer, clock;
+    let mainGroup, shapes = [], lights = [];
+    let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+    let isLoaded = false;
 
-    let t0 = null;
-    function frame(now) {
-      animId = requestAnimationFrame(frame);
-      if (!t0) t0 = now;
-      const t = (now - t0) * 0.001;
+    // ════════════════════════════════════════════
+    // 1. INITIALIZATION & UI
+    // ════════════════════════════════════════════
+    
+    const initUI = () => {
+        // Build Links
+        if (cfg && cfg.links) {
+            dom.links.innerHTML = cfg.links.map(link => `
+                <a href="${link.url}" target="_blank" rel="noopener" class="link-card">
+                    <div class="link-icon-box">
+                        <i class="${link.icon}"></i>
+                    </div>
+                    <span class="link-name">${link.name}</span>
+                </a>
+            `).join('');
+        }
 
-      // تحريك الإضاءة بشكل دائري حول الأشكال
-      light1.position.x = Math.sin(t * 0.5) * 8;
-      light1.position.y = Math.cos(t * 0.3) * 8;
-      light1.position.z = Math.sin(t * 0.2) * 8;
+        // Modal Logic
+        const triggers = ['#banner-trigger', '#profile-trigger'];
+        triggers.forEach(id => {
+            const el = document.querySelector(id);
+            if (el) {
+                el.onclick = () => {
+                    const img = el.querySelector('img');
+                    if (img) {
+                        dom.modalImg.src = img.src;
+                        dom.modal.classList.add('active');
+                    }
+                };
+            }
+        });
 
-      light2.position.x = Math.cos(t * 0.4) * 6;
-      light2.position.y = Math.sin(t * 0.6) * 6;
-      light2.position.z = Math.cos(t * 0.3) * 6;
+        dom.modalCls.onclick = () => dom.modal.classList.remove('active');
+        dom.modal.onclick = (e) => { if (e.target === dom.modal) dom.modal.classList.remove('active'); };
+    };
 
-      // دوران الأشكال ذاتياً
-      shapesGroup.children.forEach(mesh => {
-        mesh.rotation.x += mesh.userData.rx;
-        mesh.rotation.y += mesh.userData.ry;
-        mesh.rotation.z += mesh.userData.rz;
-      });
+    const runLoader = (callback) => {
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+                setTimeout(finishLoader, 500);
+            }
+            dom.fill.style.width = `${progress}%`;
+            dom.pct.innerText = `${Math.floor(progress)}%`;
+        }, 100);
 
-      // حركة الجزيئات ببطء
-      particles.rotation.y = t * 0.02;
+        function finishLoader() {
+            dom.loader.classList.add('hidden');
+            isLoaded = true;
+            if (callback) callback();
+        }
+    };
 
-      // تفاعل ناعم جداً مع اللمس/الماوس (Lerp)
-      targetRot.x = mouse.y * 0.5;
-      targetRot.y = mouse.x * 0.5;
-      
-      currentRot.x += (targetRot.x - currentRot.x) * 0.05;
-      currentRot.y += (targetRot.y - currentRot.y) * 0.05;
+    // ════════════════════════════════════════════
+    // 2. WEBGL ENGINE (The "Soul" of the site)
+    // ════════════════════════════════════════════
+    
+    const initWebGL = () => {
+        const container = document.querySelector('#webgl-container');
+        scene = new THREE.Scene();
+        clock = new THREE.Clock();
 
-      shapesGroup.rotation.x = currentRot.x;
-      shapesGroup.rotation.y = currentRot.y;
+        // Camera Setup
+        camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 15;
 
-      // حركة الكاميرا الطفيفة مع التنفس
-      camera.position.x = currentRot.y * 2;
-      camera.position.y = -currentRot.x * 2;
-      camera.lookAt(0, 0, 0);
+        // Renderer Optimization
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for performance
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.toneMapping = THREE.ReinhardToneMapping;
+        container.appendChild(renderer.domElement);
 
-      renderer.render(scene, camera);
-    }
-    animId = requestAnimationFrame(frame);
+        // Group for all 3D objects
+        mainGroup = new THREE.Group();
+        scene.add(mainGroup);
 
-    window.addEventListener('resize', onResize, { passive: true });
-  }
+        // ─── Physically Based Materials ───
+        const material = new THREE.MeshPhysicalMaterial({
+            color: 0x050001,
+            metalness: 0.9,
+            roughness: 0.1,
+            transmission: 0.5, // Glass effect
+            thickness: 2,
+            envMapIntensity: 1
+        });
 
-  function onResize() {
-    W = window.innerWidth; H = window.innerHeight;
-    if (!renderer) return;
-    camera.aspect = W / H;
-    camera.updateProjectionMatrix();
-    renderer.setSize(W, H);
-  }
+        const wireMaterial = new THREE.MeshBasicMaterial({
+            color: 0xff0033,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.05
+        });
 
-  function destroy() {
-    cancelAnimationFrame(animId);
-    window.removeEventListener('resize', onResize);
-    if (renderer) renderer.dispose();
-  }
+        // ─── Geometry Creation ───
+        const geometries = [
+            new THREE.IcosahedronGeometry(4, 0),
+            new THREE.TorusKnotGeometry(2, 0.6, 100, 16),
+            new THREE.OctahedronGeometry(3, 0)
+        ];
 
-  return { init, destroy };
+        geometries.forEach((geo, i) => {
+            const mesh = new THREE.Mesh(geo, material);
+            const wire = new THREE.Mesh(geo, wireMaterial);
+            mesh.add(wire);
+            
+            // Random Initial State
+            mesh.position.set((i - 1) * 8, Math.random() * 4 - 2, Math.random() * -5);
+            mesh.rotation.set(Math.random(), Math.random(), Math.random());
+            
+            shapes.push(mesh);
+            mainGroup.add(mesh);
+        });
+
+        // ─── Lighting (Professional Setup) ───
+        const ambient = new THREE.AmbientLight(0xffffff, 0.2);
+        scene.add(ambient);
+
+        const p1 = new THREE.PointLight(0xff0033, 2, 50);
+        p1.position.set(10, 10, 10);
+        scene.add(p1);
+        lights.push(p1);
+
+        const p2 = new THREE.PointLight(0xffffff, 1, 50);
+        p2.position.set(-10, -10, 5);
+        scene.add(p2);
+        lights.push(p2);
+
+        // Events
+        window.addEventListener('mousemove', onInputMove);
+        window.addEventListener('touchmove', e => onInputMove(e.touches[0]));
+        window.addEventListener('resize', onWindowResize);
+
+        animate();
+    };
+
+    const onInputMove = (e) => {
+        mouse.targetX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouse.targetY = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+
+    const onWindowResize = () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+
+    const animate = () => {
+        requestAnimationFrame(animate);
+        const delta = clock.getDelta();
+        const time = clock.getElapsedTime();
+
+        // Smooth Lerping for Mouse interaction
+        mouse.x += (mouse.targetX - mouse.x) * 0.05;
+        mouse.y += (mouse.targetY - mouse.y) * 0.05;
+
+        // Group Interaction
+        mainGroup.rotation.y = mouse.x * 0.2;
+        mainGroup.rotation.x = -mouse.y * 0.2;
+
+        // Individual Shape Animation
+        shapes.forEach((shape, i) => {
+            shape.rotation.y += 0.2 * delta;
+            shape.rotation.z += 0.1 * delta;
+            shape.position.y += Math.sin(time + i) * 0.005; // Gentle breathing
+        });
+
+        // Light Movement
+        lights[0].position.x = Math.sin(time * 0.5) * 15;
+        lights[1].position.y = Math.cos(time * 0.5) * 15;
+
+        renderer.render(scene, camera);
+    };
+
+    // ════════════════════════════════════════════
+    // 3. CINEMATIC ENTRANCE
+    // ════════════════════════════════════════════
+    
+    const startIntro = () => {
+        if (!window.gsap) return;
+
+        dom.card.classList.remove('hidden');
+        
+        const tl = gsap.timeline();
+        
+        tl.fromTo(dom.card, 
+            { y: 60, opacity: 0, scale: 0.9 },
+            { y: 0, opacity: 1, scale: 1, duration: 1.4, ease: "power4.out" }
+        );
+
+        tl.from('.profile-wrapper', {
+            scale: 0, duration: 0.8, ease: "back.out(1.7)"
+        }, "-=0.8");
+
+        tl.from('.link-card', {
+            y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: "power2.out"
+        }, "-=0.4");
+    };
+
+    // ─── Public Boot ───
+    return {
+        boot: () => {
+            initUI();
+            initWebGL();
+            runLoader(startIntro);
+        }
+    };
 })();
 
-/* ════════════════════════════════════════════════════════
-   GSAP CINEMATIC IDLE ANIMATIONS
-════════════════════════════════════════════════════════ */
-function initGSAP() {
-  if (typeof gsap === 'undefined') return;
-
-  // دخول البطاقة الزجاجية
-  gsap.fromTo('#main-card',
-    { opacity: 0, y: 40, scale: 0.95 },
-    { opacity: 1, y: 0, scale: 1, duration: 1.8, ease: 'power3.out', delay: 0.2 }
-  );
-
-  // طفو الصورة الشخصية
-  gsap.to('#profile-wrap', {
-    y: -10, duration: 3.5,
-    ease: 'power1.inOut', yoyo: true, repeat: -1
-  });
-
-  // طفو خفيف للبطاقة بالكامل
-  gsap.to('#main-card', {
-    y: '-=6', duration: 6,
-    ease: 'sine.inOut', yoyo: true, repeat: -1,
-    delay: 1
-  });
-
-  // دخول الروابط بشكل متتالي
-  qsa('.app-card').forEach((card, i) => {
-    gsap.fromTo(card,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.8, ease: 'back.out(1.5)', delay: 0.6 + (i * 0.1) }
-    );
-  });
-}
-
-/* ════════════════════════════════════════════════════════
-   IMAGE MODAL
-════════════════════════════════════════════════════════ */
-function initModal() {
-  const modal    = qs('#img-modal');
-  const modalImg = qs('#modal-img');
-  const closeBtn = qs('#modal-close');
-  if (!modal || !modalImg || !closeBtn) return;
-
-  function open(src) {
-    if (!src) return;
-    modalImg.src = src;
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-  function close() {
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
-    setTimeout(() => { modalImg.src = ''; }, 400);
-  }
-
-  const bannerWrap  = qs('#banner-wrap');
-  const profileWrap = qs('#profile-wrap');
-  const bannerImg   = qs('#banner-img');
-  const profileImg  = qs('#profile-img');
-
-  if (bannerWrap && bannerImg) bannerWrap.addEventListener('click', () => open(bannerImg.src));
-  if (profileWrap && profileImg) profileWrap.addEventListener('click', () => open(profileImg.src));
-
-  closeBtn.addEventListener('click', close);
-  modal.addEventListener('click', e => { if (e.target === modal) close(); });
-}
-
-/* ════════════════════════════════════════════════════════
-   BOOT
-════════════════════════════════════════════════════════ */
-function boot() {
-  buildLinks();
-  initVisitor();
-  initModal();
-  PremiumScene.init(); // تشغيل مشهد الـ 3D الجديد
-
-  runLoader(() => {
-    initGSAP();
-  });
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', boot, { once: true });
-} else {
-  boot();
-}
-
-window.addEventListener('pagehide', () => PremiumScene.destroy(), { once: true });
+// Launch System
+document.addEventListener('DOMContentLoaded', ILYA.boot);
